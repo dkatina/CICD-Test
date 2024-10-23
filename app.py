@@ -7,7 +7,7 @@ import os
 from datetime import date
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('SQLALCHEMY_DATABASE_URI')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///example.db'
 
 class Base(DeclarativeBase):
     pass
@@ -67,6 +67,9 @@ class Book(Base):
 
 
 with app.app_context():
+    # new_user = Member(name='Paul', email='paul@email', phone='123')
+    # db.session.add(new_user)
+    # db.session.commit()
 
     #READING DATA
     # query = select(Member).where(Member.name == 'Dylan')
@@ -107,12 +110,15 @@ with app.app_context():
     
     # db.session.commit()
 
-    dylan = db.session.get(Member,1)
+    # dylan = db.session.get(Member,1)
 
-    for loan in dylan.loans:
-        print("Loan ID:", loan.id)
-        for book in loan.books:
-            print(book.title)
+    # for loan in dylan.loans:
+    #     print("Loan ID:", loan.id)
+    #     for book in loan.books:
+    #         print(book.title)
+    # user = db.session.get(Member, 1)
+    # print(user.name)
+    pass
 
     
 
@@ -125,8 +131,8 @@ with app.app_context():
 if __name__ == '__main__':
 
     with app.app_context():
-    #     db.create_all()
-        pass
+        db.create_all()
+        
         
 
     app.run()

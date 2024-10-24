@@ -19,7 +19,7 @@ db = SQLAlchemy(model_class = Base)
 ma = Marshmallow()
 
 db.init_app(app) #Adding sqlalchemy extension to Flask
-ma.init_app(app)
+ma.init_app(app) #Initializing Marshmallow to Flask
 
 #========== Models ==========
 

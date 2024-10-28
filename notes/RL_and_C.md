@@ -13,6 +13,8 @@ By the end of this lesson, students will:
 
 ### **Section 1: Introduction to Flask-Limiter**
 
+[Flask-Limiter Documentation](https://flask-limiter.readthedocs.io/en/stable/)
+
 #### **What is Flask-Limiter?**
 
 *   Flask-Limiter is an extension that provides rate limiting to Flask applications, which is essential for preventing abuse by limiting the number of requests a client can make to the API. This allows us to protects our API from malicious attacks like DDOS attacks, which are repetitive requests (100's even 1000's per second) used to overwhelm your server.
@@ -134,6 +136,8 @@ def create_member():
     
 
 ### **Introduction to Flask-Caching**
+
+[Flask-Caching Documentaion](https://flask-caching.readthedocs.io/en/latest/)
 
 #### **What is Flask-Caching?**
 

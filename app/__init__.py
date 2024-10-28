@@ -1,6 +1,6 @@
 from flask import Flask
 from app.models import db
-from app.extensions import ma
+from app.extensions import ma, limiter, cache
 from app.blueprints.members import members_bp
 from app.blueprints.loans import loans_bp
 from app.blueprints.books import books_bp
@@ -14,6 +14,8 @@ def create_app(config_name):
     #Add extensions
     db.init_app(app)
     ma.init_app(app)
+    limiter.init_app(app)
+    cache.init_app(app)
 
 
 

@@ -4,9 +4,11 @@ from .schemas import member_schema, members_schema
 from marshmallow import ValidationError
 from app.models import Member, db
 from sqlalchemy import select
+from app.extensions import limiter
 
 #CREATE Member
 @members_bp.route("/", methods=['POST'])
+@limiter.limit("3 per hour")
 def create_member():
     #Validate and Deserialize incoming data
     try:
@@ -59,6 +61,7 @@ def update_member(member_id):
 
 #DELETE MEMBER
 @members_bp.route("/<int:member_id>", methods=['DELETE'])
+@limiter.limit("3 per hour")
 def delete_member(member_id):
     member = db.session.get(Member, member_id)
 

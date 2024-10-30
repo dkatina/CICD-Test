@@ -26,6 +26,8 @@ class Member(Base):
     name: Mapped[str] = mapped_column(db.String(100), nullable=False)
     email: Mapped[str] = mapped_column(db.String(200), nullable=False, unique=True)
     phone: Mapped[str] = mapped_column(db.String(20))
+    password: Mapped[str] = mapped_column(db.String(200), nullable=False)
+    role: Mapped[str] = mapped_column(db.String(50), nullable=False)
 
     #One-to-Many
     loans: Mapped[List['Loan']] = db.relationship(back_populates='member')

@@ -1,5 +1,6 @@
 from flask import request, jsonify
 from app.blueprints.books import books_bp
+from app.utils.util import admin_required
 from .schemas import book_schema, books_schema
 from marshmallow import ValidationError
 from app.models import Book, db
@@ -8,6 +9,7 @@ from app.extensions import limiter, cache
 
 #CREATE book
 @books_bp.route("/", methods=['POST'])
+@admin_required
 def create_book():
     #Validate and Deserialize incoming data
     try:
@@ -42,6 +44,7 @@ def get_book(book_id):
 
 #UPDATE book
 @books_bp.route("/<int:book_id>", methods=['PUT'])
+@admin_required
 def update_book(book_id):
     book = db.session.get(Book, book_id)
 
@@ -62,6 +65,7 @@ def update_book(book_id):
 
 #DELETE book
 @books_bp.route("/<int:book_id>", methods=['DELETE'])
+@admin_required
 def delete_book(book_id):
     book = db.session.get(Book, book_id)
 

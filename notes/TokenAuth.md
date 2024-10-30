@@ -1,12 +1,12 @@
 ## Learning Objectives
 
 - The students should be able to apply the concepts of authentication and authorization in API development, using techniques such as JWT.
-- The students should be able to understand  secure APIs, preventing common vulnerabilities like SQL injection attacks, generate JWT.
+- The students should be able to understand  secure APIs, preventing common vulnerabilities like SQL injection attacks, forging JWT.
 - The students should be able to analyze and implement best practices for securing APIs, including encryption, access control.
 
 ### **JWT User Authentication**
 
-JSON Web Tokens (JWT) is a popular method for user authentication in APIs. A JWT is a compact, URL-safe token that contains claims, which are pieces of information about the user (e.g., their username or role). JWTs are signed with a secret key, which means that they can be verified as authentic.
+JSON Web Tokens (JWT) is a popular method for user authentication in APIs. A JWT is a compact, URL-safe token that contains claims, which are pieces of information about the user (e.g., their username or role). JWTs are signed with a secret key, which means that they can be verified as authentically generated form our server.
 
 ### How JWT works?
 
@@ -53,11 +53,6 @@ If all of those checks pass the wrapper will run the wrapped function, if not we
 
 #### Implementing Role-Based Access Control
 
-In order to have role-based access control we have to have roles! Start by creating a Role model, and adding a role_id column to Customers that references the Role table (Note: we will have to drop all tables for the changes to take effect)
+In order to have role-based access control we have to have roles! So we're going to add a role field to our Member model, where we will be able to set members as `admin` or `general` members.
 
-Add roles 'Admin' and 'User' to the Roles table
-Now create some new customers with these roles
-
-- Change the encode_token() function to now embed the users role into the token payload
-- create a new wrapper @admin_required that checks if the role embedded in the payload is equal to 'Admin'
-
+We can now embed this information into the tokens we make just like we did with `member_id` and set up a wrapper `@admin_required` That not only checks the validates the token, but confirms that the role embedded in the token is the `admin` role.

@@ -16,7 +16,10 @@ def create_loan(token_user):
         loan_data = input_loan_schema.load(request.json)
     except ValidationError as e:
         return jsonify(e.messages), 400
-    
+ 
+    if token_user != loan_data['member_id']:
+        return jsonify({"message": "Invalid User Id"})
+
     new_loan = Loan(loan_date=datetime.now(), due_date= datetime.now() + timedelta(days=7), member_id=loan_data['member_id'])
     db.session.add(new_loan)
     db.session.commit()

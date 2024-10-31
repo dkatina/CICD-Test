@@ -1,3 +1,4 @@
+from app.blueprints.books.schemas import BookSchema
 from app.extensions import ma
 from app.models import Loan
 from marshmallow import fields
@@ -15,6 +16,8 @@ class LoanSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Loan
         include_fk = True
+    book_ids = fields.List(fields.Integer)
+    books = fields.Nested("BookSchema", many=True )
 
 loan_schema = LoanSchema()
 input_loan_schema = LoanSchema(exclude=["loan_date", "due_date"])

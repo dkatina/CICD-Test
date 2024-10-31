@@ -28,10 +28,16 @@ def create_book():
 #RETRIEVE book
 @books_bp.route("/", methods=["GET"])
 @limiter.limit("1000 per hour")
-@cache.cached(timeout=60)
 def get_books():
+    print("GETTING BOOKS")
+    page = request.args.get("page")
+    page_size = request.args.get("page_size")
+    print(page, page_size)
     query = select(Book)
-    books = db.session.execute(query).scalars().all()
+    if page and page_size:
+        books = db.paginate(query, page=int(page), per_page=int(page_size))
+    else:
+        books = db.session.execute(query).scalars().all()
 
     return books_schema.jsonify(books), 200
 
@@ -75,3 +81,28 @@ def delete_book(book_id):
     db.session.delete(book)
     db.session.commit()
     return jsonify({"message": f"succeffuly deleted book {book_id}!"})
+
+#Returns the most popular books
+@books_bp.route("/popular", methods=["GET"])
+def popular_books():
+    query = select(Book)
+    books = db.session.execute(query).scalars().all()
+
+    #sort based on popularity
+    books.sort(key=lambda book: len(book.loans), reverse=True)
+
+    return books_schema.jsonify(books[:10]), 200
+
+#Search Book using title as a search term
+@books_bp.route("/search", methods=['GET'])
+def search_book():
+    
+    title = request.args.get("title")
+    if title:
+        query = select(Book).where(Book.title.like(f"%{title}%"))
+    else:
+        query = select(Book)
+
+    books = db.session.execute(query).scalars().all()
+
+    return books_schema.jsonify(books), 200

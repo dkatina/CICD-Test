@@ -1,7 +1,7 @@
 from flask import jsonify, request
 from marshmallow import ValidationError
 from app.blueprints.loans import loans_bp
-from app.models import Loan
+from app.models import Book, Loan
 from app.utils.util import token_required
 from .schemas import loan_schema, loans_schema, input_loan_schema
 from datetime import date, datetime, timedelta
@@ -17,10 +17,20 @@ def create_loan(token_user):
     except ValidationError as e:
         return jsonify(e.messages), 400
  
+    print(loan_data)
     if token_user != loan_data['member_id']:
         return jsonify({"message": "Invalid User Id"})
 
     new_loan = Loan(loan_date=datetime.now(), due_date= datetime.now() + timedelta(days=7), member_id=loan_data['member_id'])
+    
+
+    for book_id in loan_data['book_ids']:
+        book = db.session.get(Book, book_id)
+        if book:
+            new_loan.books.append(book)
+        else:
+            return jsonify({"message": f"invalid book id {book_id}"}), 400
+
     db.session.add(new_loan)
     db.session.commit()
 

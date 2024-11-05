@@ -4,6 +4,12 @@ from app.extensions import ma, limiter, cache
 from app.blueprints.members import members_bp
 from app.blueprints.loans import loans_bp
 from app.blueprints.books import books_bp
+from flask_swagger_ui import get_swaggerui_blueprint
+
+SWAGGER_URL = '/api/docs' #This will be our url endpoint to access our docs
+API_URL = '/static/swagger.yaml' #Grabbing our host URL from our yaml file
+
+swagger_blueprint = get_swaggerui_blueprint(SWAGGER_URL, API_URL, config={'app_name': 'Library API'})
 
 
 def create_app(config_name):
@@ -23,6 +29,7 @@ def create_app(config_name):
     app.register_blueprint(members_bp, url_prefix="/members")
     app.register_blueprint(loans_bp, url_prefix="/loans")
     app.register_blueprint(books_bp, url_prefix="/books")
+    app.register_blueprint(swagger_blueprint, url_prefix=SWAGGER_URL)
 
 
     return app

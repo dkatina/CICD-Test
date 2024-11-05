@@ -4,7 +4,7 @@ from datetime import datetime, timedelta, timezone
 from functools import wraps
 import os
 
-SECRET_KEY = os.environ.get('SECRET_KEY') #Secret kept secret in my .env, used to mint my tokens
+SECRET_KEY = "super_secret" #Secret kept secret in my .env, used to mint my tokens
 
 #creates a token using a members id
 def encode_token(member_id, role):

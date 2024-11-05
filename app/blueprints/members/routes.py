@@ -1,6 +1,6 @@
 from flask import request, jsonify
 from app.blueprints.members import members_bp
-from .schemas import member_schema, members_schema, login_schema
+from .schemas import member_schema, members_schema, login_schema, update_schema
 from marshmallow import ValidationError
 from app.models import Member, db
 from sqlalchemy import select
@@ -30,7 +30,9 @@ def login():
             "token": token
         }
     
-    return jsonify(response), 200
+        return jsonify(response), 200
+    else:
+        return jsonify({"message": "Invalid email or password"}),400
 
 
 #CREATE Member
@@ -77,7 +79,7 @@ def update_member(token_user):
         return jsonify({"message": "invalid id"}), 400
     
     try:
-        member_data = member_schema.load(request.json)
+        member_data = update_schema.load(request.json)
     except ValidationError as e:
         return jsonify(e.messages), 400
     

@@ -1,0 +1,200 @@
+swagger: '2.0'
+info:
+  title: "Library API"
+  description: "API to manage a library"
+  version: "1.0.0"
+host: "127.0.0.1:5000" #working on local host
+schemes:
+  - "http"
+consumes:
+  - "application/json"
+produces:
+  - "application/json"
+
+#To add Token Auth
+securityDefinitions:
+  bearerAuth:
+    type: apiKey
+    name: Authorization
+    in: header
+
+
+
+#OUR ENDPOINTS
+paths: 
+  /members/login:
+    post: #post request
+      tags:
+        - members #Creates a catagory for members routes
+      summary: "Login Endpoint (generates a token)"
+      description: "Endpoint for user authentication, and token generation"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Credentials for login"
+          required: true
+          schema:
+            $ref: "#/definitions/LoginPayload"
+      responses:
+        200:
+          description: "Login Successful"
+          schema:
+            $ref: "#/definitions/LoginResponse"
+          examples:
+            application/json:
+              token: "jansgkjasiudapongvjasndga....."
+              message: "Successfully Logged In"
+              status: "success"
+
+  /members:
+    put:
+      tags:
+        - members
+      summary: "Endpoint to update a members profile"
+      description: "Endpoint to update a Member's information, requires member to be logged in."
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Member updates, leave blank to keep original"
+          required: true
+          schema:
+            $ref: "#/definitions/MemberUpdatePayload"
+      responses:
+        200:
+          description: "Successful Update"
+          schema:
+            $ref: "#/definitions/MemberUpdateResponse"
+          examples:
+            application/json:
+              id: 1
+              name: PatrickBateman
+              email: hip2besquare@email.com
+              password: businesscard
+              phone: "123-456-7890"
+              role: admin
+    
+    post:
+      tags:
+        - members
+      summary: "Endpoint to create a member"
+      description: "Endpoint to create a Member"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Member Information"
+          required: true
+          schema:
+            $ref: "#/definitions/MemberCreatePayload"
+      responses:
+        201:
+          description: "Successfully Created User"
+          schema:
+            $ref: "#/definitions/MemberCreateResponse"
+          examples:
+            application/json:
+              id: 1
+              name: PatrickBateman
+              email: hip2besquare@email.com
+              password: businesscard
+              phone: "123-456-7890"
+              role: admin
+
+
+
+
+#OUR REQUESTS and RESPONSES
+definitions: 
+  LoginPayload:
+    type: "object"
+    properties:
+      email:
+        type: "string"
+      password:
+        type: "string"
+        format: "password"
+    required:
+      - "email"
+      - "password"
+  
+  LoginResponse:
+    type: "object"
+    properties:
+      token:
+        type: "string"
+      message: 
+        type: "string"
+      status:
+        type: "string"
+
+  MemberUpdatePayload:
+    type: "object"
+    properties:
+      email:
+        type: "string"
+      name:
+        type: "string"
+      password:
+        type: "string"
+      phone:
+        type: "string"
+    required:
+      - name
+      - email
+      - phone
+      - password
+
+  MemberUpdateResponse:
+    type: "object"
+    properties:
+      id:
+        type: "int"
+      email:
+        type: "string"
+      name:
+        type: "string"
+      password:
+        type: "string"
+      phone:
+        type: "string"
+      role:
+        type: "string"
+
+  MemberCreatePayload:
+    type: "object"
+    properties:
+      email:
+        type: "string"
+      name:
+        type: "string"
+      password:
+        type: "string"
+      phone:
+        type: "string"
+      role:
+        type: "string"
+    required:
+      - name
+      - email
+      - phone
+      - password
+
+  MemberCreateResponse:
+    type: "object"
+    properties:
+      id:
+        type: "int"
+      email:
+        type: "string"
+      name:
+        type: "string"
+      password:
+        type: "string"
+      phone:
+        type: "string"
+      role:
+        type: "string"
+    
+      
+    

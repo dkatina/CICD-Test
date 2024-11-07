@@ -1,5 +1,5 @@
-from application.models import Book
-from application.extensions import ma
+from app.models import Book
+from app.extensions import ma
 
 
 class BookSchema(ma.SQLAlchemyAutoSchema):

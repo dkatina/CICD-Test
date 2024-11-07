@@ -1,11 +1,11 @@
 from flask import request, jsonify
-from application.blueprints.members import members_bp
+from app.blueprints.members import members_bp
 from .schemas import member_schema, members_schema, login_schema, update_schema
 from marshmallow import ValidationError
-from application.models import Member, db
+from app.models import Member, db
 from sqlalchemy import select
-from application.extensions import limiter
-from application.utils.util import encode_token, token_required
+from app.extensions import limiter
+from app.utils.util import encode_token, token_required
 from werkzeug.security import generate_password_hash, check_password_hash
 
 #Login Member

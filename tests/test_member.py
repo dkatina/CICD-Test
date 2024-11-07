@@ -1,9 +1,9 @@
-from application import create_app
-from application.models import db, Member
+from app import create_app
+from app.models import db, Member
 import unittest
 from werkzeug.security import generate_password_hash
 
-from application.utils.util import encode_token
+from app.utils.util import encode_token
 
 
 class MemberRoutes(unittest.TestCase):

@@ -1,6 +1,6 @@
-from application.blueprints.books.schemas import BookSchema
-from application.extensions import ma
-from application.models import Loan
+from app.blueprints.books.schemas import BookSchema
+from app.extensions import ma
+from app.models import Loan
 from marshmallow import fields
 
 # class LoanSchema(ma.Schema):

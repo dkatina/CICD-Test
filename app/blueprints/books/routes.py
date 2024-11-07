@@ -1,11 +1,11 @@
 from flask import request, jsonify
-from application.blueprints.books import books_bp
-from application.utils.util import admin_required
+from app.blueprints.books import books_bp
+from app.utils.util import admin_required
 from .schemas import book_schema, books_schema
 from marshmallow import ValidationError
-from application.models import Book, db
+from app.models import Book, db
 from sqlalchemy import select
-from application.extensions import limiter, cache
+from app.extensions import limiter, cache
 
 #CREATE book
 @books_bp.route("/", methods=['POST'])

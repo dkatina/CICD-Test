@@ -31,6 +31,18 @@ class MemberRoutes(unittest.TestCase):
         response = self.client.post('/members/', json=new_member)
         print(response.json)
         self.assertEqual(response.status_code, 201)
+
+    def test_unique_member(self):
+        new_member = {
+            "name": "Tester`",
+            "email": "Test@test.com",
+            "phone": "123-456-7890",
+            "password": "test",
+            "role": "admin"
+        }
+        response = self.client.post('/members/', json=new_member)
+        print(response.json)
+        self.assertEqual(response.status_code, 400)
     
     def test_login_user(self):
         credentials = {

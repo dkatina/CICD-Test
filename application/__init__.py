@@ -1,9 +1,9 @@
 from flask import Flask
-from app.models import db
-from app.extensions import ma, limiter, cache
-from app.blueprints.members import members_bp
-from app.blueprints.loans import loans_bp
-from app.blueprints.books import books_bp
+from application.models import db
+from application.extensions import ma, limiter, cache
+from application.blueprints.members import members_bp
+from application.blueprints.loans import loans_bp
+from application.blueprints.books import books_bp
 from flask_swagger_ui import get_swaggerui_blueprint
 
 SWAGGER_URL = '/api/docs' #This will be our url endpoint to access our docs

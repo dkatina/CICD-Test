@@ -1,5 +1,5 @@
-from app.models import Member
-from app.extensions import ma
+from application.models import Member
+from application.extensions import ma
 from marshmallow import fields
 
 

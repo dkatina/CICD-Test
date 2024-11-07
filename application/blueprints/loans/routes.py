@@ -1,11 +1,11 @@
 from flask import jsonify, request
 from marshmallow import ValidationError
-from app.blueprints.loans import loans_bp
-from app.models import Book, Loan
-from app.utils.util import token_required
+from application.blueprints.loans import loans_bp
+from application.models import Book, Loan
+from application.utils.util import token_required
 from .schemas import loan_schema, loans_schema, input_loan_schema
 from datetime import date, datetime, timedelta
-from app.models import db
+from application.models import db
 from sqlalchemy import select
 
 #create loan
